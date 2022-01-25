@@ -1,23 +1,19 @@
 package main
 
 import (
-	"net/http"
-
-	"github.com/devchrischen/url-shortener/lib/db"
 	"github.com/gin-gonic/gin"
+
+	"github.com/devchrischen/url-shortener/api/url"
+	"github.com/devchrischen/url-shortener/lib/db"
 )
 
 func main() {
-	r := gin.Default()
+	router := gin.Default()
 	db.Init()
 
-	r.POST("/", func(c *gin.Context) {
-		c.String(http.StatusOK, "short url created!")
-	})
+	api := router.Group("")
 
-	r.GET("/:shortCode", func(c *gin.Context) {
-		c.String(http.StatusOK, "successfully redirect!")
-	})
+	url.Route(api)
 
-	r.Run()
+	router.Run()
 }
