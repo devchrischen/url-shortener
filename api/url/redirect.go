@@ -50,11 +50,11 @@ func Redirect(c *gin.Context) {
 	}
 
 	// return code, message, data(redirect url) as response
-	data := url.Url
+	originalUrl := url.Url
 	c.JSON(http.StatusOK, apires.Data{
 		Base: apires.Base{
 			Message: "Find redirect URL successfully!",
 		},
-		Data: data,
+		Data: originalUrl,
 	})
 }

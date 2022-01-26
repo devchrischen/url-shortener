@@ -44,11 +44,11 @@ func CreateShortUrl(c *gin.Context) {
 	}
 
 	// return code, message, data(baseUrl + hash) as response
-	data := "http://localhost:8080/" + hashValue
+	shortUrl := "http://localhost:8080/" + hashValue
 	c.JSON(http.StatusOK, apires.Data{
 		Base: apires.Base{
 			Message: "Short URL created!",
 		},
-		Data: data,
+		Data: shortUrl,
 	})
 }
