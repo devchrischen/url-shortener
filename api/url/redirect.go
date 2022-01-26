@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/devchrischen/url-shortener/entities/edb"
+	"github.com/devchrischen/url-shortener/lib/apires"
 	"github.com/devchrischen/url-shortener/lib/db"
 	t "github.com/devchrischen/url-shortener/lib/time"
 	surl "github.com/devchrischen/url-shortener/services/url"
@@ -49,6 +50,11 @@ func Redirect(c *gin.Context) {
 	}
 
 	// return code, message, data(redirect url) as response
-
-	c.String(http.StatusOK, "successfully redirect!")
+	data := url.Url
+	c.JSON(http.StatusOK, apires.Data{
+		Base: apires.Base{
+			Message: "Find redirect URL successfully!",
+		},
+		Data: data,
+	})
 }
