@@ -13,13 +13,13 @@ import (
 	surl "github.com/devchrischen/url-shortener/services/url"
 )
 
-type Request struct {
+type shortenRequest struct {
 	OriginalUrl string `json:"original_url" form:"original_url" binding:"required"`
 }
 
 func CreateShortUrl(c *gin.Context) {
 	// validate request
-	var req Request
+	var req shortenRequest
 	if err := c.ShouldBind(&req); err != nil {
 		fmt.Println(err)
 	}

@@ -10,5 +10,5 @@ func Route(r *gin.RouterGroup) {
 
 	g.POST("/", CreateShortUrl)
 
-	g.GET("/:shortCode", Redirect)
+	g.GET("/:hashValue", Redirect)
 }
