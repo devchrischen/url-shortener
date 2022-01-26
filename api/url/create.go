@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/devchrischen/url-shortener/entities/edb"
+	"github.com/devchrischen/url-shortener/lib/apires"
 	"github.com/devchrischen/url-shortener/lib/db"
 	h "github.com/devchrischen/url-shortener/lib/hash"
 	surl "github.com/devchrischen/url-shortener/services/url"
@@ -27,13 +28,10 @@ func CreateShortUrl(c *gin.Context) {
 	// produce unique hash => Input: nil  Output: hash string
 	hashValue := h.CreateSixDigitHash()
 	// save original url and hash to database => Input: url, hash  Output: error
-	// fmt.Println(db.DB)
 	urlService := surl.New(db.DB)
-	// fmt.Printf("%+v \n", urlService)
 	hash := edb.Hash{
 		Value: hashValue,
 	}
-	// fmt.Println(hash)
 	if err := urlService.InsertHash(&hash); err != nil {
 		fmt.Println(err)
 	}
@@ -46,6 +44,11 @@ func CreateShortUrl(c *gin.Context) {
 	}
 
 	// return code, message, data(baseUrl + hash) as response
-
-	c.String(http.StatusOK, "short url created!")
+	data := "http://localhost:8080/" + hashValue
+	c.JSON(http.StatusOK, apires.Data{
+		Base: apires.Base{
+			Message: "Short URL created!",
+		},
+		Data: data,
+	})
 }
