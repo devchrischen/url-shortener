@@ -10,10 +10,11 @@ import (
 var DB *gorm.DB
 
 func Init() {
-	DB, err := gorm.Open("mysql", "chrischen:funnow@tcp(localhost:3306)/Url_Shortener?charset=utf8mb4,utf8&parseTime=True")
+	var err error
+	DB, err = gorm.Open("mysql", "chrischen:funnow@tcp(localhost:3306)/Url_Shortener?charset=utf8mb4,utf8&parseTime=True")
 	if err != nil {
 		panic(err)
 	}
-	DB.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&edb.OriginalUrl{}, &edb.Hash{})
 
+	DB.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&edb.OriginalUrl{}, &edb.Hash{})
 }
