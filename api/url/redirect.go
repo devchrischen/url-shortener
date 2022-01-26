@@ -40,6 +40,14 @@ func Redirect(c *gin.Context) {
 	if expired {
 		fmt.Println("The short url was expired!")
 	}
+	// delete hash record if expired
+
+	// query db to get original url
+	url := edb.OriginalUrl{}
+	if err := urlService.GetUrlRecord(&url, hash.ID); err != nil {
+		fmt.Println(err)
+	}
+
 	// return code, message, data(redirect url) as response
 
 	c.String(http.StatusOK, "successfully redirect!")
