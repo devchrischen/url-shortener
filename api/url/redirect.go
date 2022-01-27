@@ -33,19 +33,27 @@ func Redirect(c *gin.Context) {
 	// query db to check if the hash exist
 	urlService := surl.New(db.DB)
 	hash := edb.Hash{}
-	if err := urlService.GetHashRecord(&hash, req.HashValue); err != nil {
+	if err := urlService.GetHash(&hash, req.HashValue); err != nil {
 		fmt.Println(err)
 	}
 	// check if the hash is not expired
 	expired := t.CheckHashExpired(hash.CreatedAt)
 	if expired {
+		// delete url record
+		if err := urlService.DeleteUrl(hash.ID); err != nil {
+			fmt.Println("DB error")
+		}
+		// delete hash record
+		if err := urlService.DeleteHash(hash.ID); err != nil {
+			fmt.Println("DB error")
+		}
+		// throw error
 		fmt.Println("The short url was expired!")
 	}
-	// delete hash record if expired
 
 	// query db to get original url
 	url := edb.OriginalUrl{}
-	if err := urlService.GetUrlRecord(&url, hash.ID); err != nil {
+	if err := urlService.GetUrl(&url, hash.ID); err != nil {
 		fmt.Println(err)
 	}
 
