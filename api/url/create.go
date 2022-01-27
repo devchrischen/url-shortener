@@ -25,8 +25,10 @@ func CreateShortUrl(c *gin.Context) {
 	}
 	// check url duplicate => if exists in db, return the existing hash value
 	urlService := surl.New(db.DB)
-	hashValue, exist := urlService.CheckUrlExist(req.OriginalUrl)
-	fmt.Println("Does url exist?", exist, "What is it's hash?", hashValue)
+	hashValue, exist, err := urlService.CheckUrlExist(req.OriginalUrl)
+	if err != nil {
+		fmt.Println(err)
+	}
 	if exist {
 		shortUrl := "http://localhost:8080/" + hashValue
 		c.JSON(http.StatusOK, apires.Data{
