@@ -38,7 +38,14 @@ func CreateShortUrl(c *gin.Context) {
 		return
 	}
 	// produce unique hash
-	hashValue = h.CreateSixDigitHash()
+	for {
+		tempHash := h.CreateSixDigitHash()
+		hashExist := urlService.CheckHashExist(tempHash)
+		if !hashExist {
+			hashValue = tempHash
+			break
+		}
+	}
 	// save original url and hash to database => Input: url, hash  Output: error
 
 	hash := edb.Hash{
