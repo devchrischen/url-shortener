@@ -42,7 +42,10 @@ func CreateShortUrl(c *gin.Context) {
 	// produce unique hash
 	for {
 		tempHash := h.CreateSixDigitHash()
-		hashExist := urlService.CheckHashExist(tempHash)
+		hashExist, err := urlService.CheckHashExist(tempHash)
+		if err != nil {
+			fmt.Println(err)
+		}
 		if !hashExist {
 			hashValue = tempHash
 			break

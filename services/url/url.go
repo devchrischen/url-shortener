@@ -3,8 +3,9 @@ package surl
 import (
 	"fmt"
 
-	"github.com/devchrischen/url-shortener/entities/edb"
 	"github.com/jinzhu/gorm"
+
+	"github.com/devchrischen/url-shortener/entities/edb"
 )
 
 func (s *Service) InsertUrl(url *edb.OriginalUrl) error {
