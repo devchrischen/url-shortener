@@ -6,6 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
+	"github.com/devchrischen/url-shortener/config"
 	"github.com/devchrischen/url-shortener/entities/edb"
 	"github.com/devchrischen/url-shortener/lib/apires"
 	"github.com/devchrischen/url-shortener/lib/db"
@@ -30,7 +31,11 @@ func CreateShortUrl(c *gin.Context) {
 		fmt.Println(err)
 	}
 	if exist {
-		shortUrl := "http://localhost:8080/" + hashValue
+		shortUrl := fmt.Sprintf("%s:%s/%s",
+			config.Config.BaseURL,
+			config.Config.Port,
+			hashValue,
+		)
 		c.JSON(http.StatusOK, apires.Data{
 			Base: apires.Base{
 				Message: "Url already in database!",
@@ -68,7 +73,11 @@ func CreateShortUrl(c *gin.Context) {
 	}
 
 	// return code, message, data(baseUrl + hash) as response
-	shortUrl := "http://localhost:8080/" + hashValue
+	shortUrl := fmt.Sprintf("%s:%s/%s",
+		config.Config.BaseURL,
+		config.Config.Port,
+		hashValue,
+	)
 	c.JSON(http.StatusOK, apires.Data{
 		Base: apires.Base{
 			Message: "Short URL created!",

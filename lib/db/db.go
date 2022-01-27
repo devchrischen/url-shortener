@@ -1,9 +1,12 @@
 package db
 
 import (
+	"fmt"
+
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 
+	"github.com/devchrischen/url-shortener/config"
 	"github.com/devchrischen/url-shortener/entities/edb"
 )
 
@@ -11,7 +14,17 @@ var DB *gorm.DB
 
 func Init() {
 	var err error
-	DB, err = gorm.Open("mysql", "chrischen:funnow@tcp(localhost:3306)/Url_Shortener?charset=utf8mb4,utf8&parseTime=True")
+	dbConfig := config.Config.DB
+	dsn := fmt.Sprintf("%v:%v@%v(%v:%v)/%v?%v",
+		dbConfig.User,
+		dbConfig.Password,
+		dbConfig.Protocol,
+		dbConfig.Host,
+		dbConfig.Port,
+		dbConfig.Name,
+		dbConfig.Params,
+	)
+	DB, err = gorm.Open("mysql", dsn)
 	if err != nil {
 		panic(err)
 	}
