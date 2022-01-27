@@ -23,12 +23,24 @@ func CreateShortUrl(c *gin.Context) {
 	if err := c.ShouldBind(&req); err != nil {
 		fmt.Println(err)
 	}
-	// check duplicate => Input: url  Output: error
-
-	// produce unique hash => Input: nil  Output: hash string
-	hashValue := h.CreateSixDigitHash()
-	// save original url and hash to database => Input: url, hash  Output: error
+	// check url duplicate => if exists in db, return the existing hash value
 	urlService := surl.New(db.DB)
+	hashValue, exist := urlService.CheckUrlExist(req.OriginalUrl)
+	fmt.Println("Does url exist?", exist, "What is it's hash?", hashValue)
+	if exist {
+		shortUrl := "http://localhost:8080/" + hashValue
+		c.JSON(http.StatusOK, apires.Data{
+			Base: apires.Base{
+				Message: "Url already in database!",
+			},
+			Data: shortUrl,
+		})
+		return
+	}
+	// produce unique hash
+	hashValue = h.CreateSixDigitHash()
+	// save original url and hash to database => Input: url, hash  Output: error
+
 	hash := edb.Hash{
 		Value: hashValue,
 	}
