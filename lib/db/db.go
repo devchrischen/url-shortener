@@ -7,7 +7,6 @@ import (
 	"github.com/jinzhu/gorm"
 
 	"github.com/devchrischen/url-shortener/config"
-	"github.com/devchrischen/url-shortener/entities/edb"
 )
 
 var DB *gorm.DB
@@ -29,5 +28,5 @@ func Init() {
 		panic(err)
 	}
 
-	DB.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&edb.OriginalUrl{}, &edb.Hash{})
+	// DB.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&edb.OriginalUrl{}, &edb.Hash{})
 }

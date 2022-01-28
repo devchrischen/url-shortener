@@ -13,7 +13,7 @@ var Config = struct {
 		Host     string `default:"db" yaml:"Host"`
 		Port     string `default:"3306" yaml:"Port"`
 		Name     string `default:"Url_Shortener" yaml:"Name"`
-		Params   string `default:"charset=utf8mb4,utf8&parseTime=True" yaml:"Params"`
+		Params   string `default:"charset=utf8mb4&parseTime=True" yaml:"Params"`
 	}
 }{}
 

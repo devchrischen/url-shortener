@@ -8,5 +8,5 @@ db:
   Host: localhost
   Port: 3306
   Name: Url_Shortener
-  Params: charset=utf8mb4,utf8&parseTime=True
+  Params: charset=utf8mb4&parseTime=True
   
