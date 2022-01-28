@@ -10,8 +10,8 @@ CREATE TABLE IF NOT EXISTS `Url_Shortener`.`OriginalUrl` (
   CONSTRAINT `FK_OriginalUrl_HashID`
   FOREIGN KEY (`HashID`)
   REFERENCES `Url_Shortener`.`Hash` (`ID`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE)
 ENGINE = InnoDB;
 -- +goose StatementEnd
 

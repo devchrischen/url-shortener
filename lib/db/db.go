@@ -28,5 +28,4 @@ func Init() {
 		panic(err)
 	}
 
-	// DB.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&edb.OriginalUrl{}, &edb.Hash{})
 }
