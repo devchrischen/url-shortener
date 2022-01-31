@@ -2,7 +2,8 @@ package apires
 
 type (
 	Base struct {
-		Message string `json:"message"	description:"API return Message"`
+		Code    int    `json:"code" description:"API Return Code"`
+		Message string `json:"message" description:"API return Message"`
 	}
 
 	Data struct {
