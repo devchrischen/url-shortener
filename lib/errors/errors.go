@@ -3,10 +3,11 @@ package errors
 import (
 	"net/http"
 
-	"github.com/devchrischen/url-shortener/lib/apires"
 	"github.com/gin-gonic/gin"
 	"github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
+
+	"github.com/devchrischen/url-shortener/lib/apires"
 )
 
 type (
@@ -26,21 +27,24 @@ type (
 )
 
 const (
-	CODE_UNKNOWN_ERR    = -1
-	CODE_OK             = 0
-	CODE_INVALID_PARAMS = 10
-	CODE_DB_ERR         = 15
-	CODE_NOT_EXISTS     = 16
-	CODE_DUPLICATE_KEY  = 17
+	CODE_UNKNOWN_ERR       = -1
+	CODE_OK                = 0
+	CODE_INVALID_PARAMS    = 10
+	CODE_DB_ERR            = 15
+	CODE_NOT_EXISTS        = 16
+	CODE_DUPLICATE_KEY     = 17
+	CODE_SHORT_URL_EXPIRED = 21
 )
 
-var ErrCodeMsgMap = map[int]string{}
+var ErrCodeMsgMap = map[int]string{
+	CODE_INVALID_PARAMS:    "Invalid params from request",
+	CODE_SHORT_URL_EXPIRED: "Short url is expired",
+}
 
 func GetMessage(code int) string {
 	if message, ok := ErrCodeMsgMap[code]; ok {
 		return message
 	}
-
 	return ""
 }
 
@@ -73,8 +77,8 @@ func CustomError(c *gin.Context, err ICustomError) {
 		return
 	}
 
-	if msg, ok := ErrCodeMsgMap[code]; ok {
-		Error(c, httpCode, code, CustomMsg(msg))
+	if _, ok := ErrCodeMsgMap[code]; ok {
+		Error(c, httpCode, code, CustomMsg(errMsg))
 		err.Reset()
 		return
 	}
