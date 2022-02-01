@@ -1,8 +1,6 @@
 package surl
 
 import (
-	"fmt"
-
 	"github.com/jinzhu/gorm"
 
 	"github.com/devchrischen/url-shortener/entities/edb"
@@ -26,7 +24,7 @@ func (s *Service) CheckUrlExist(urlStr string) (string, bool, error) {
 	var notFound bool
 	if err != nil {
 		if notFound = gorm.IsRecordNotFoundError(err); notFound {
-			// it's url record notFoundError
+			// url record notFoundError
 			return "", false, nil
 		} else {
 			// other db error
@@ -36,13 +34,8 @@ func (s *Service) CheckUrlExist(urlStr string) (string, bool, error) {
 	hashInstance := &edb.Hash{}
 	err = s.db.Where("ID = ?", urlInstance.HashID).Take(&hashInstance).Error
 	if err != nil {
-		if notFound = gorm.IsRecordNotFoundError(err); notFound {
-			// it's hash record notFoundError
-			return "", true, fmt.Errorf("cannot find corresponding hash with existing url")
-		} else {
-			// other db error
-			return "", true, err
-		}
+		// hash record notFoundError or other db error
+		return "", true, err
 	}
 	return hashInstance.Value, true, nil
 
