@@ -36,9 +36,7 @@ $ goose -dir ./goose -s create test sql
 
 ### Optimization list
 
-* Error handling
 * Rate Limiting
-* Refactor ( regexp -> req.Validate, CheckHashExpired -> service )
 * Transaction ( avoid race condition )
 * Docker
 * Unit test
