@@ -15,7 +15,7 @@ import (
 )
 
 type redirectRequest struct {
-	HashValue string `uri:"hashValue" binding:"required"`
+	HashValue string `uri:"hash_value" binding:"required"`
 }
 
 func Redirect(c *gin.Context) {

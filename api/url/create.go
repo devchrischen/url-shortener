@@ -15,18 +15,18 @@ import (
 	surl "github.com/devchrischen/url-shortener/services/url"
 )
 
-type shortenRequest struct {
+type createRequest struct {
 	OriginalUrl string `json:"original_url" form:"original_url" binding:"required"`
 }
 
 func CreateShortUrl(c *gin.Context) {
 	// validate request
-	var req shortenRequest
+	var req createRequest
 	if err := c.ShouldBind(&req); err != nil {
 		errors.Throw(c, errors.ErrInvalidParams.SetError(err))
 		return
 	}
-	
+
 	// check url duplicate => If existing in DB, return the existing short url
 	urlService := surl.New(db.DB)
 	hashValue, exist, err := urlService.CheckUrlExist(req.OriginalUrl)
