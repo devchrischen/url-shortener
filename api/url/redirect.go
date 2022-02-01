@@ -10,7 +10,6 @@ import (
 	"github.com/devchrischen/url-shortener/lib/apires"
 	"github.com/devchrischen/url-shortener/lib/db"
 	"github.com/devchrischen/url-shortener/lib/errors"
-	t "github.com/devchrischen/url-shortener/lib/time"
 	surl "github.com/devchrischen/url-shortener/services/url"
 )
 
@@ -40,7 +39,7 @@ func Redirect(c *gin.Context) {
 		return
 	}
 	// check if the hash is not expired
-	expired := t.CheckHashExpired(hash.CreatedAt)
+	expired := urlService.CheckHashExpired(hash.CreatedAt)
 	if expired {
 		// delete url record
 		if err := urlService.DeleteUrl(hash.ID); err != nil {
