@@ -2,10 +2,10 @@ package url
 
 import (
 	"net/http"
-	"regexp"
 
 	"github.com/gin-gonic/gin"
 
+	"github.com/devchrischen/url-shortener/api/url/request"
 	"github.com/devchrischen/url-shortener/entities/edb"
 	"github.com/devchrischen/url-shortener/lib/apires"
 	"github.com/devchrischen/url-shortener/lib/db"
@@ -13,24 +13,14 @@ import (
 	surl "github.com/devchrischen/url-shortener/services/url"
 )
 
-type redirectRequest struct {
-	HashValue string `uri:"hash_value" binding:"required"`
-}
-
 func Redirect(c *gin.Context) {
 	// validate request
-	var req redirectRequest
-	if err := c.ShouldBindUri(&req); err != nil {
-		errors.Throw(c, errors.ErrInvalidParams.SetError(err))
-		return
+	r := request.RedirectRequest{}
+	req, err := r.Validate(c)
+	if err != nil {
+		errors.Throw(c, err)
 	}
 
-	// check param is valid hash
-	match, _ := regexp.MatchString("[A-Za-z0-9]{6}", req.HashValue)
-	if !match {
-		errors.Throw(c, errors.ErrInvalidParams)
-		return
-	}
 	// query db to check if the hash exist
 	urlService := surl.New(db.DB)
 	hash := edb.Hash{}
