@@ -11,13 +11,13 @@ const HASH_BASE = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxy
 func CreateSixDigitHash() string {
 	var hashes = make([]string, 6)
 	for i := 0; i < 6; i++ {
-		hashes[i] = chooseRandomDigit()
+		hashes[i] = chooseRandomChar()
 	}
 	hashStr := strings.Join(hashes, "")
 	return hashStr
 }
 
-func chooseRandomDigit() string {
+func chooseRandomChar() string {
 	rand.Seed(time.Now().UnixNano())
 	randomDigit := string(HASH_BASE[rand.Intn(62)])
 	return randomDigit
