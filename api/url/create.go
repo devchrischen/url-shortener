@@ -7,7 +7,6 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/devchrischen/url-shortener/config"
-	"github.com/devchrischen/url-shortener/entities/edb"
 	"github.com/devchrischen/url-shortener/lib/apires"
 	"github.com/devchrischen/url-shortener/lib/db"
 	"github.com/devchrischen/url-shortener/lib/errors"
@@ -65,18 +64,7 @@ func CreateShortUrl(c *gin.Context) {
 	}
 
 	// save original url and hash to database
-	hash := edb.Hash{
-		Value: hashValue,
-	}
-	if err := urlService.InsertHash(&hash); err != nil {
-		errors.Throw(c, err)
-		return
-	}
-	url := edb.OriginalUrl{
-		HashID: hash.ID,
-		Url:    req.OriginalUrl,
-	}
-	if err := urlService.InsertUrl(&url); err != nil {
+	if err := urlService.CreateUrlData(hashValue, req.OriginalUrl); err != nil {
 		errors.Throw(c, err)
 		return
 	}
