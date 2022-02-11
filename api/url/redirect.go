@@ -31,16 +31,19 @@ func Redirect(c *gin.Context) {
 	// check if the hash is not expired
 	expired := urlService.CheckHashExpired(hash.CreatedAt)
 	if expired {
-		// delete url record
-		if err := urlService.DeleteUrl(hash.ID); err != nil {
-			errors.Throw(c, err)
-			return
-		}
 		// delete hash record
 		if err := urlService.DeleteHash(hash.ID); err != nil {
 			errors.Throw(c, err)
 			return
 		}
+
+		// delete url record
+		// => deprecated: there is a on-delete cascade constraint on OriginalUrl, so no need to proceed DeleteUrl
+		// if err := urlService.DeleteUrl(hash.ID); err != nil {
+		// 	errors.Throw(c, err)
+		// 	return
+		// }
+
 		// throw error
 		errors.Throw(c, errors.ErrExpired)
 		return
