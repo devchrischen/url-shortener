@@ -64,7 +64,7 @@ func CreateShortUrl(c *gin.Context) {
 	}
 
 	// save original url and hash to database
-	if err := urlService.CreateUrlData(hashValue, req.OriginalUrl); err != nil {
+	if err := urlService.InsertUrlData(hashValue, req.OriginalUrl); err != nil {
 		errors.Throw(c, err)
 		return
 	}

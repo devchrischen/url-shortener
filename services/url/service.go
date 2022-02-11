@@ -16,27 +16,26 @@ func New(conn *gorm.DB) *Service {
 	}
 }
 
-func (s *Service) CreateUrlData(hashValue, originalUrl string) error {
+func (s *Service) InsertUrlData(hashValue, originalUrl string) error {
 	tx := s.db.Begin()
 	if err := tx.Error; err != nil {
 		return err
 	}
-	createService := &Service{
+	defer tx.Rollback()
+	insertService := &Service{
 		db: tx,
 	}
 	hash := edb.Hash{
 		Value: hashValue,
 	}
-	if err := createService.InsertHash(&hash); err != nil {
-		tx.Rollback()
+	if err := insertService.InsertHash(&hash); err != nil {
 		return err
 	}
 	url := edb.OriginalUrl{
 		HashID: hash.ID,
 		Url:    originalUrl,
 	}
-	if err := createService.InsertUrl(&url); err != nil {
-		tx.Rollback()
+	if err := insertService.InsertUrl(&url); err != nil {
 		return err
 	}
 	return tx.Commit().Error
