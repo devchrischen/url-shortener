@@ -10,10 +10,15 @@ var Config = struct {
 		User     string `default:"user" yaml:"User"`
 		Password string `default:"password" yaml:"Password"`
 		Protocol string `default:"tcp" yaml:"Protocol"`
-		Host     string `default:"db" yaml:"Host"`
+		Host     string `default:"localhost" yaml:"Host"`
 		Port     string `default:"3306" yaml:"Port"`
 		Name     string `default:"Url_Shortener" yaml:"Name"`
 		Params   string `default:"charset=utf8mb4&parseTime=True" yaml:"Params"`
+	}
+
+	Redis struct {
+		Host string `default:"localhost" yaml:"Host"`
+		Port string `default:"6379" yaml:"Port"`
 	}
 }{}
 
