@@ -8,6 +8,8 @@ import (
 	"github.com/devchrischen/url-shortener/config"
 )
 
+const APIRateLimiterKeyPrefix = "rate-limiter"
+
 var (
 	Client *goredis.Client
 )

@@ -27,18 +27,21 @@ type (
 )
 
 const (
-	CODE_UNKNOWN_ERR       = -1
-	CODE_OK                = 0
-	CODE_INVALID_PARAMS    = 10
-	CODE_DB_ERR            = 15
-	CODE_NOT_EXISTS        = 16
-	CODE_DUPLICATE_KEY     = 17
-	CODE_SHORT_URL_EXPIRED = 21
+	CODE_UNKNOWN_ERR           = -1
+	CODE_OK                    = 0
+	CODE_INVALID_PARAMS        = 10
+	CODE_DB_ERR                = 15
+	CODE_NOT_EXISTS            = 16
+	CODE_DUPLICATE_KEY         = 17
+	CODE_SHORT_URL_EXPIRED     = 20
+	CODE_RATE_LIMITER_ERROR    = 30
+	CODE_RATE_LIMITER_TOO_MANY = 31
 )
 
 var ErrCodeMsgMap = map[int]string{
-	CODE_INVALID_PARAMS:    "Invalid params from request",
-	CODE_SHORT_URL_EXPIRED: "Short url is expired",
+	CODE_INVALID_PARAMS:        "Invalid params from request",
+	CODE_SHORT_URL_EXPIRED:     "Short url is expired",
+	CODE_RATE_LIMITER_TOO_MANY: "Request limit exceeded",
 }
 
 func GetMessage(code int) string {
