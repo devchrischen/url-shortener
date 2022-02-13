@@ -3,6 +3,7 @@ package redis
 import (
 	"fmt"
 
+	"github.com/chenyahui/gin-cache/persist"
 	goredis "github.com/go-redis/redis/v8"
 
 	"github.com/devchrischen/url-shortener/config"
@@ -11,7 +12,8 @@ import (
 const APIRateLimiterKeyPrefix = "rate-limiter"
 
 var (
-	Client *goredis.Client
+	Client     *goredis.Client
+	CacheStore *persist.RedisStore
 )
 
 func Init() {
@@ -21,4 +23,6 @@ func Init() {
 	Client = goredis.NewClient(&goredis.Options{
 		Addr: addr,
 	})
+
+	CacheStore = persist.NewRedisStore(Client)
 }
