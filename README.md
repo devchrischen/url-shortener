@@ -36,9 +36,7 @@ $ goose -dir ./goose -s create test sql
 
 ### Optimization list
 
-* Rate Limiting
-* Transaction ( avoid race condition )
 * Docker
 * Unit test
 * Problem of insufficient hash in the future
-* Caching
+* Race condition problem
