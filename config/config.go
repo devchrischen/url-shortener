@@ -3,22 +3,22 @@ package config
 import "github.com/jinzhu/configor"
 
 var Config = struct {
-	BaseURL string `default:"http://localhost" yaml:"BaseURL"`
-	Port    string `default:"8080" yaml:"Port"`
+	BaseURL string `env:"BASE_URL" yaml:"BaseURL" default:"http://localhost"`
+	Port    string `env:"PORT" yaml:"Port" default:"8080"`
 
 	DB struct {
-		User     string `default:"user" yaml:"User"`
-		Password string `default:"password" yaml:"Password"`
-		Protocol string `default:"tcp" yaml:"Protocol"`
-		Host     string `default:"localhost" yaml:"Host"`
-		Port     string `default:"3306" yaml:"Port"`
-		Name     string `default:"Url_Shortener" yaml:"Name"`
-		Params   string `default:"charset=utf8mb4&parseTime=True" yaml:"Params"`
+		User     string `env:"DB_HOST" yaml:"User" default:"user"`
+		Password string `env:"DB_PASSWORD" yaml:"Password" default:"password"`
+		Protocol string `env:"DB_PROTOCOL" yaml:"Protocol" default:"tcp"`
+		Host     string `env:"DB_HOST" yaml:"Host" default:"localhost" `
+		Port     string `env:"DB_PORT" yaml:"Port" default:"3306"`
+		Name     string `env:"DB_NAME" yaml:"Name" default:"Url_Shortener"`
+		Params   string `env:"DB_PARAMS" yaml:"Params" default:"charset=utf8mb4&parseTime=True"`
 	}
 
 	Redis struct {
-		Host string `default:"localhost" yaml:"Host"`
-		Port string `default:"6379" yaml:"Port"`
+		Host string `env:"REDIS_HOST" yaml:"Host" default:"localhost"`
+		Port string `env:"REDIS_PORT" yaml:"Port" default:"6379"`
 	}
 }{}
 
