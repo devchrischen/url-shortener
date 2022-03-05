@@ -2,11 +2,14 @@ BaseURL: http://localhost
 Port: 8080
 
 db:
-  User: user
-  Password: password
+  User: chrischen
+  Password: funnow
   Protocol: tcp
   Host: localhost
   Port: 3306
   Name: Url_Shortener
   Params: charset=utf8mb4&parseTime=True
   
+redis:
+  Host: localhost
+  Port: 6379
