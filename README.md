@@ -4,7 +4,11 @@
 
 ## Usage
 
+### Run with your own environment
+
 * Build config.yml with config.example.yml
+
+* Build a MySQL database named `Url_Shortener`
 
 * Run DB migration
 
@@ -13,7 +17,18 @@
 $ go run main.go
 ```
 
-### DB migration
+###  Run with docker
+
+* Build config.yml with config.example.yml
+    * DB host in docker should be `db`
+    * Redis host in docker should be `redis`
+
+* Build docker container and run in background
+```sh
+$ docker compose up -d
+```
+
+## DB migration
 
 * Install goose: https://github.com/pressly/goose
 
@@ -34,9 +49,7 @@ $ goose -dir ./goose mysql "username:password@tcp(localhost:3306)/Url_Shortener?
 $ goose -dir ./goose -s create test sql
 ```
 
-### Optimization list
+## Optimization list
 
-* Docker
 * Unit test
 * Problem of insufficient hash in the future
-* Race condition problem
