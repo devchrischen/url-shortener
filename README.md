@@ -8,8 +8,6 @@
 
 * Build config.yml with config.example.yml
 
-* Build a MySQL database named `Url_Shortener`
-
 * Run DB migration
 
 * Run main.go to start the server
@@ -32,7 +30,7 @@ $ docker compose up -d
 
 * Install goose: https://github.com/pressly/goose
 
-* Create a database named `Url_Shortener`
+* Create a MySQL database named `Url_Shortener`
 
 * Run goose up to latest migration (replace 'username' and 'password' with your own account)
 ```sh
